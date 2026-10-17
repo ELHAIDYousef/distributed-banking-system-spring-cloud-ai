@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: account-service
+
+  config:
+    import:
+      - "optional:file:.env[.properties]"
+      - "optional:file:../.env[.properties]"
+      - "optional:configserver:"
+
+  datasource:
+    url: jdbc:postgresql://${ACCOUNT_DB_HOST}:${ACCOUNT_DB_PORT}/${ACCOUNT_DB_NAME}
+    username: ${ACCOUNT_DB_USERNAME}
+    password: ${ACCOUNT_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  cloud:
+    discovery:
+      enabled: true
+    config:
+      enabled: false
+    openfeign:
+      circuit breaker:
+        enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
+resilience4j:
+  circuit breaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+  time limiter:
+    configs:
+      default:
+        timeout-duration: 3s
+server:
+  port: 8082

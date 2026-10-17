@@ -1,0 +1,88 @@
+{
+  "info": {
+    "name": "EBank Microservices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8888" },
+    { "key": "customerId", "value": "1" },
+    { "key": "accountId", "value": "paste-an-account-id" }
+  ],
+  "item": [
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Get all customers",
+          "request": { "method": "GET", "url": "{{baseUrl}}/customers" }
+        },
+        {
+          "name": "Get customer by id",
+          "request": { "method": "GET", "url": "{{baseUrl}}/customers/{{customerId}}" }
+        },
+        {
+          "name": "Create customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Yousef\",\n  \"lastName\": \"Elhaid\",\n  \"email\": \"yousef.elhaid@gmail.com\"\n}"
+            },
+            "url": "{{baseUrl}}/customers"
+          }
+        },
+        {
+          "name": "Update customer",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Updated\",\n  \"lastName\": \"Customer\",\n  \"email\": \"updated.customer@gmail.com\"\n}"
+            },
+            "url": "{{baseUrl}}/customers/{{customerId}}"
+          }
+        },
+        {
+          "name": "Delete customer",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/customers/{{customerId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Get all accounts with customer",
+          "request": { "method": "GET", "url": "{{baseUrl}}/accounts" }
+        },
+        {
+          "name": "Get account by id",
+          "request": { "method": "GET", "url": "{{baseUrl}}/accounts/{{accountId}}" }
+        },
+        {
+          "name": "Get unknown account (404)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/accounts/unknown" }
+        },
+        {
+          "name": "Get accounts (Spring Data REST)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/bankAccounts" }
+        }
+      ]
+    },
+    {
+      "name": "Dynamic routes (service name)",
+      "item": [
+        {
+          "name": "Customers via service name",
+          "request": { "method": "GET", "url": "{{baseUrl}}/customer-service/customers" }
+        },
+        {
+          "name": "Accounts via service name",
+          "request": { "method": "GET", "url": "{{baseUrl}}/account-service/accounts" }
+        }
+      ]
+    }
+  ]
+}

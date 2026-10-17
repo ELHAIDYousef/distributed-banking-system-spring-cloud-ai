@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+          routes:
+            - id: customer-service
+              uri: lb://customer-service
+              predicates:
+                - Path=/customers/**
+            - id: account-service
+              uri: lb://account-service
+              predicates:
+                - Path=/accounts/**,/bankAccounts/**
+
+server:
+  port: 8888
+
+eureka:
+  instance:
+    prefer-ip-address: true
