@@ -24,6 +24,10 @@ spring:
             account:
               url: http://localhost:8082/mcp
 
+
+telegram:
+  token: ${TELEGRAM_BOT_TOKEN}
+
 server:
   port: 8084
 
