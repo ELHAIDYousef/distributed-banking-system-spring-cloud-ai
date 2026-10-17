@@ -3,6 +3,7 @@ package ma.enset.accountservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import ma.enset.accountservice.enums.AccountType;
+import ma.enset.accountservice.model.Customer;
 
 import java.time.LocalDate;
 
@@ -26,4 +27,8 @@ public class BankAccount {
     @Enumerated(EnumType.STRING)
     private AccountType type;
     private Long customerId;
+
+    @Transient
+    private Customer customer;
+
 }
