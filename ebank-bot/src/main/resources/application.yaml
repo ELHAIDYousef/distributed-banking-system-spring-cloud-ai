@@ -15,6 +15,14 @@ spring:
         model: qwen/qwen3.8-27b
         extra-body:
           reasoning_effort: none
+    mcp:
+      client:
+        streamable-http:
+          connections:
+            customer:
+              url: http://localhost:8081/mcp
+            account:
+              url: http://localhost:8082/mcp
 
 server:
   port: 8084
