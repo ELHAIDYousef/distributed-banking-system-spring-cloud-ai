@@ -5,6 +5,10 @@ spring:
     gateway:
       server:
         webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
           routes:
             - id: customer-service
               uri: lb://customer-service
