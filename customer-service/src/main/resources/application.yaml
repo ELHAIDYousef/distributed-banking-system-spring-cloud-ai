@@ -19,9 +19,13 @@ spring:
 
   cloud:
     discovery:
-      enabled: false
+      enabled: true
     config:
       enabled: false
+
+eureka:
+  instance:
+    prefer-ip-address: true
 
 server:
   port: 8081

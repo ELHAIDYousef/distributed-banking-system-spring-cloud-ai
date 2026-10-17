@@ -19,12 +19,17 @@ spring:
 
   cloud:
     discovery:
-      enabled: false
+      enabled: true
     config:
       enabled: false
     openfeign:
       circuit breaker:
         enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
 resilience4j:
   circuit breaker:
     configs:
