@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  *
  * @author Yousef ELHAID
  */
-@FeignClient(name = "customer-service",
-        url = "${customer-service.url}",
-        fallback = CustomerRestClientFallback.class)
+@FeignClient(name = "customer-service", fallback = CustomerRestClientFallback.class)
 public interface CustomerRestClient {
 
     @GetMapping("/customers/{id}")

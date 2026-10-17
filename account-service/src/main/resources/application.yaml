@@ -44,6 +44,3 @@ resilience4j:
         timeout-duration: 3s
 server:
   port: 8082
-
-customer-service:
-  url: http://localhost:8081
