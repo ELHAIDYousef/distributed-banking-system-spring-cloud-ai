@@ -16,5 +16,23 @@ services:
       timeout: 5s
       retries: 5
 
+  account-db:
+    image: postgres:18
+    container_name: account-db
+    environment:
+      POSTGRES_DB: ${ACCOUNT_DB_NAME}
+      POSTGRES_USER: ${ACCOUNT_DB_USERNAME}
+      POSTGRES_PASSWORD: ${ACCOUNT_DB_PASSWORD}
+    ports:
+      - "5434:5432"
+    volumes:
+      - account-db-data:/var/lib/postgresql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${ACCOUNT_DB_USERNAME} -d ${ACCOUNT_DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   customer-db-data:
+  account-db-data:
