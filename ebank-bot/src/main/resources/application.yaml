@@ -9,10 +9,12 @@ spring:
 
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY}
+      api-key: ${GROQ_API_KEY}
+      base-url: https://api.groq.com/openai/v1
       chat:
-        options:
-          model: gpt-4o-mini
+        model: qwen/qwen3.8-27b
+        extra-body:
+          reasoning_effort: none
 
 server:
   port: 8084
