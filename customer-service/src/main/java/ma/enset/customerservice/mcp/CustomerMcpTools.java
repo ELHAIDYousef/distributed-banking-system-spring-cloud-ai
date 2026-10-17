@@ -31,4 +31,11 @@ public class CustomerMcpTools {
             @McpToolParam(description = "The customer id", required = true) Long customerId) {
         return customerService.getCustomerById(customerId);
     }
+
+    @McpTool(name = "saveCustomer",
+            description = "Create a new bank customer from a first name, a last name and a unique email")
+    public Customer saveCustomer(
+            @McpToolParam(description = "The customer to create: firstName, lastName, email", required = true) Customer customer) {
+        return customerService.saveCustomer(customer);
+    }
 }
