@@ -77,20 +77,14 @@ ma.enset.accountservice
 
 ## OpenFeign
 
-```java
-@FeignClient(name = "customer-service", fallback = CustomerRestClientFallback.class)
-public interface CustomerRestClient {
-    @GetMapping("/customers/{id}")
-    Customer findCustomerById(@PathVariable("id") Long id);
-
-    @GetMapping("/customers")
-    PagedModel<Customer> allCustomers();
-}
-```
-
-- Enabled with `@EnableFeignClients` on the main class.
-- `PagedModel` reads the HAL format returned by Spring Data REST.
-- The service is resolved **by name** through Eureka; no hard-coded URL.
+| Item | Detail |
+|---|---|
+| Client | `CustomerRestClient` interface annotated with `@FeignClient(name = "customer-service")` |
+| Methods | `findCustomerById(id)` → `GET /customers/{id}`; `allCustomers()` → `GET /customers` |
+| Activation | `@EnableFeignClients` on the main class |
+| List response | `PagedModel<Customer>`, which reads the HAL format returned by Spring Data REST |
+| Address | Resolved **by name** through Eureka — no hard-coded URL |
+| Fallback | `CustomerRestClientFallback`, used by the circuit breaker |
 
 ## Resilience4J circuit breaker
 
@@ -115,14 +109,11 @@ stateDiagram-v2
 
 ## Discovery service (Eureka)
 
-```yaml
-server:
-  port: 8761
-eureka:
-  client:
-    register-with-eureka: false
-    fetch-registry: false
-```
+| Property | Value | Why |
+|---|---|---|
+| `server.port` | `8761` | Eureka's standard port |
+| `eureka.client.register-with-eureka` | `false` | The server must not list itself |
+| `eureka.client.fetch-registry` | `false` | It is the registry, so it doesn't look one up |
 
 Clients register with `eureka.instance.prefer-ip-address: true` and use the default URL `http://localhost:8761/eureka`.
 
@@ -141,18 +132,15 @@ Dynamic routes (discovery locator): any registered service is reachable as `/<se
 
 ## Configuration pattern
 
-All services read the root `.env` through:
+All services read the root `.env` through `spring.config.import`, with three entries:
 
-```yaml
-spring:
-  config:
-    import:
-      - "optional:file:.env[.properties]"
-      - "optional:file:../.env[.properties]"
-      - "optional:configserver:"
-```
+| Entry | Role |
+|---|---|
+| `optional:file:.env[.properties]` | Reads `.env` when the app runs from the project root |
+| `optional:file:../.env[.properties]` | Reads `.env` when the app runs from the module folder (IntelliJ) |
+| `optional:configserver:` | Required because the Config Client is on the classpath |
 
-Values in quotes: a YAML value ending with `:` must be quoted.
+`optional:` means no crash if the file is missing. In YAML, these values must be **quoted**: a value ending with `:` is otherwise read as a key.
 
 ## Screenshots
 
@@ -161,7 +149,6 @@ Values in quotes: a YAML value ending with `:` must be quoted.
 All services registered in the discovery service.
 
 ![Eureka dashboard](images/eureka-dashboard.png)
-
 
 ### Swagger UI
 
@@ -178,8 +165,6 @@ All services registered in the discovery service.
 **Customers** — `GET /customers`:
 
 ![Postman get customers](images/postman-get-customers.png)
-
-    
 
 **Circuit breaker** — customer-service stopped, accounts still returned with the fallback customer:
 

@@ -25,10 +25,20 @@ spring:
     openfeign:
       circuit breaker:
         enabled: true
+  ai:
+    mcp:
+      server:
+        name: account-mcp-server
+        version: 1.0.0
+        type: SYNC
+        protocol: STREAMABLE
+
 
 eureka:
   instance:
     prefer-ip-address: true
+
+
 
 resilience4j:
   circuit breaker:
@@ -42,5 +52,7 @@ resilience4j:
     configs:
       default:
         timeout-duration: 3s
+
+
 server:
   port: 8082

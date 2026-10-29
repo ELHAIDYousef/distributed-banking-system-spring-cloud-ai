@@ -23,6 +23,14 @@ spring:
     config:
       enabled: false
 
+  ai:
+    mcp:
+      server:
+        name: customer-mcp-server
+        version: 1.0.0
+        type: SYNC
+        protocol: STREAMABLE
+
 eureka:
   instance:
     prefer-ip-address: true
