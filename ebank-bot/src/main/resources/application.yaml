@@ -28,6 +28,9 @@ spring:
 telegram:
   token: ${TELEGRAM_BOT_TOKEN}
 
+discord:
+  token: ${DISCORD_BOT_TOKEN}
+
 server:
   port: 8084
 
